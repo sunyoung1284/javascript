@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+
+  <span id="listTitle"></span>
+  <input type="button" name="" value="글쓰기" id="writeBtn">
+
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script>
+  //post테이블 셀렉트 해온거 화면에 띄워주기
+    $.ajax({
+      url: `http://localhost/selectPost`,
+      data: {},
+      success: function(response) {
+        $("#list").html("");
+        $("#listTitle").html("");
+        for (var i = 0; i < response.length; i++) {
+          var result = `${response[i].no} <a href ="/details?no=${response[i].no}"> ${response[i].title} </a>`
+          $("#listTitle").append(`${result} <br>`);
+        }
+      }
+    });
+
+    //글쓰기 버튼 눌렀을때 insert 페이지로~
+    $("#writeBtn").click(function() {
+      location.href = "/insert"
+    });
+  </script>
+
+</body>
+
+</html>

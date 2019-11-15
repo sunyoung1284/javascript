@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>CSS</title>
+</head>
+<span id="numberArea"></span>
+<span id="numberArea2"></span>
+<body>
+
+  <script>
+
+    var numberText ='';
+    for(var i=1;i<=100;i++){
+
+      if(i%10==0){
+
+        numberText += i+'<br>';
+      }else{
+
+        numberText += i+" ";
+
+}
+  }
+
+   var numberText2='';
+   for(var i=0;i<10;i++){
+     for(var j=1;j<11;j++){
+       numberText2+=i*10+j+" ";
+       }
+       numberText2+='<br>';
+     }
+  document.getElementById('numberArea').innerHTML=numberText;
+  document.getElementById('numberArea2').innerHTML=numberText2;
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+    #chatroom {
+      width: 600px;
+      margin-bottom: 2px;
+      display: flex;
+    }
+
+    #chats {
+      border: 1px solid black;
+      width: 375px;
+      height: 90vh;
+      overflow: scroll;
+      float: left;
+    }
+
+    #users {
+      border: 1px solid black;
+      border-left: none;
+      float: right;
+      width: 200px;
+      height: 90vh;
+    }
+
+    #message {
+      width: 400px;
+    }
+
+    .user {
+      padding: 4px;
+      background-color: #cecece;
+    }
+
+    #userCount {
+      padding: 5px;
+      background-color: black;
+      color: white;
+      border-bottom: 1px solid white;
+    }
+
+    .timeago {
+      color: #cecece;
+      float: right;
+      font-size: 10px;
+    }
+
+    #login {
+      width: 200px;
+      height: 300px;
+      background-color: #FFCCCC;
+      border: 2px solid #FFCCCC;
+    }
+
+    #id {
+      width: 158px;
+      margin: 50px 20px 2px 20px;
+      height: 30px;
+      border: 1px solid #eee;
+    }
+
+    #loginBtn {
+      width: 160px;
+      margin: 0px 20px 20px 20px;
+      height: 30px;
+      border: 1px solid #eee;
+    }
+
+    #title {
+      font-size: 25px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="login">
+    <h3 id="title">SUNTALK<h3>
+        <input type="text" name="" value="" id="id">
+        <input type="button" name="" value="접속" id="loginBtn">
+  </div>
+
+  <div id="chatroom" style="display:none">
+    <div id="chats">
+    </div>
+    <div id="users">
+      <div id="userCount"><span id="count"></span> Users Online</div>
+      <div id="connectedUserList"></div>
+    </div>
+
+  </div>
+  <div id="input" style="display:none">
+    <input type="text" name="messages" id="message">
+    <input type="button" id="sendMsg" value="send">
+  </div>
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket;
+  var count = 0;
+
+  socket = io();
+  $("#id").focus(); //커서가 인풋창에 자동으로!!
+  $("#message").focus();
+  $("#loginBtn").click(function() {
+    var id = $("#id").val();
+    if (id == "") {
+      alert("대화명을 입력하세요!")
+      return
+    }
+    $.ajax({
+      url: `/login`,
+      data: {
+        id: id
+      },
+      success: function(response) {
+        if (response == "로그인성공") {
+          alert('로그인성공')
+          $("#login").css("display", "none");
+          $("#chatroom").css("display", "");
+          $("#input").css("display", "")
+
+          socket.emit('joinRoom', id);
+
+          socket.on('selectChat', function(params) {
+            console.log(params)
+            for(var i=0; i<params.length; i++){
+              $("#chats").append(`<span>${params[i].id}:${params[i].message}<br></span>`)
+            }
+          });
+
+          $("#chats").append(`<span>---${id}님이 입장하셨습니다.---<br></span>`)
+
+          socket.on('newMember', function(params) {
+            $("#chats").append(`<span>---${params}님이 입장하셨습니다.--- <br></span>`)
+              $("#chats").scrollTop($(document).height());
+          });
+
+
+          $("#connectedUserList").append(`<span id="${id}">나:${id}<br></span>`)
+          socket.on('allMember', function(params) {
+            for (var i = 0; i < params.length; i++) {
+              count++
+              $("#count").html(count);
+              if (params[i] != id) {
+                $("#connectedUserList").append(`<span id="${params[i]}">${params[i]}<br></span>`)
+                  $("#chats").scrollTop($(document).height());
+              }
+            }
+          });
+
+          socket.on('newFace', function(params) {
+            count++
+            $("#count").html(count);
+            $("#connectedUserList").append(`<span id="${params}">${params}<br></span>`)
+              $("#chats").scrollTop($(document).height());
+          });
+
+          $("#sendMsg").click(function() {
+            var message = $("#message").val();
+            socket.emit('chat', {
+              id: id,
+              message: message
+            });
+            $("#message").val("");
+            $("#message").focus();
+            $("#chats").append(`<span> 나 : ${message}<br></span>`)
+              $("#chats").scrollTop($(document).height());
+          })
+
+          socket.on('newChatMsg', function(params) {
+
+            $("#chats").append(`<span>${params.id} : ${params.message}</span><br>`)
+              $("#chats").scrollTop($(document).height());
+          });
+
+          socket.on('outMember', function(params) {
+            $("#chats").append(`<span>---${params}님이 퇴장하셨습니다.--- </span><br>`)
+              $("#chats").scrollTop($(document).height());
+            $("#" + params).remove()
+            count--;
+            $("#count").html(count);
+
+          });
+
+
+        } else {
+          alert('존재하는 대화명')
+        }
+      }
+    });
+  });
+
+  $("#id").keydown(function(key) {
+    if (key.keyCode == 13) {
+      $("#loginBtn").click();
+    }
+  });
+  $("#message").keydown(function(key) {
+    if (key.keyCode == 13) {
+      $("#sendMsg").click();
+    }
+  });
+</script>
+
+</html>

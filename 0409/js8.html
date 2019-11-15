@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>CSS</title>
+</head>
+
+<body>
+  0<input type="radio" name="radioB">
+  1<input type="radio" name="radioB">
+  2<input type="radio" name="radioB">
+  3<input type="radio" name="radioB">
+  4<input type="radio" name="radioB"> 가중치<input type="text" name="weight">
+  <br>
+  0<input type="radio" name="radioB1">
+  1<input type="radio" name="radioB1">
+  2<input type="radio" name="radioB1">
+  3<input type="radio" name="radioB1">
+  4<input type="radio" name="radioB1"> 가중치<input type="text" name="weight">
+  <br>
+  0<input type="radio" name="radioB2">
+  1<input type="radio" name="radioB2">
+  2<input type="radio" name="radioB2">
+  3<input type="radio" name="radioB2">
+  4<input type="radio" name="radioB2">가중치 <input type="text" name="weight">
+
+
+  <Br>
+<span id="number"></span>
+  <br>
+
+  <input type="button" value="계산" id="btn">
+  <script>
+    document.getElementById('btn').addEventListener('click', function() {
+      var radios = document.getElementsByName('radioB');
+      var radios1 = document.getElementsByName('radioB1');
+      var radios2 = document.getElementsByName('radioB2');
+      var weight0=document.getElementsByName('weight')[0].value;
+      var weight1=document.getElementsByName('weight')[1].value;
+      var weight2=document.getElementsByName('weight')[2].value;
+      var select0;
+      var select1;
+      var select2;
+      var total;
+      var print;
+      for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked == true) {
+
+          select0=i
+
+        }
+      }
+
+      for (var j = 0; j < radios1.length; j++) {
+        if (radios1[j].checked == true) {
+
+          select1=j
+        }
+      }
+      for (var k = 0; k < radios2.length; k++) {
+        if (radios2[k].checked == true) {
+
+          select2=k
+        }
+      }
+      total= (select0*weight0)+(select1*weight1)+(select2*weight2)
+      print=`${select0}*${weight0}+${select1}*${weight1}+${select2}*${weight2}=${total}`
+
+      document.getElementsByName('weight')[0].value;
+      document.getElementById('number').innerHTML=print;
+
+    });
+  </script>
+</body>
+
+</html>

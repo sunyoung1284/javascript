@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <select name="" id="selectBox1">
+    <option value="0">현대</option>
+    <option value="1">기아</option>
+    <option value="2">쌍용</option>
+    <option value="3">벤츠</option>
+    <option value="4">bmw</option>
+
+  </select>
+  <select name="" id="selectBox2">
+    <option value="0">빨강</option>
+    <option value="1">파랑</option>
+    <option value="2">초록</option>
+    <option value="3">노랑</option>
+    <option value="4">검정</option>
+
+  </select>
+
+  <input type="button" id="btn" name="" value="요청"><br>
+  <span id="result"></span>
+  <script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+
+
+  <script>
+    $("#btn").click(function(){
+      var car= $("#selectBox1").val();
+      var color=$("#selectBox2").val();
+      $.ajax({
+        url: `http://localhost/carPrice`,
+        data: {
+          carprice : car,
+          colorprice:color
+
+        },
+        success: function(response) {
+          $("#result").html(response)
+        }
+      });
+
+    });
+
+  </script>
+</body>
+
+</html>

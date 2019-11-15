@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <input type="button" id="btn" value="뉴스불러와"><br>
+    <span id="result"></span>
+
+  </body>
+  <script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+  <script>
+    $("#btn").click(function() {
+
+      $.ajax({
+        url: `http://localhost/newList`,
+        data: {
+
+        },
+        success: function(response) {
+          $("#result").html(""); //중복안되게 할려고 만들어줘찌
+          for(var i=0; i<response.length; i++){//배열에 객체니깐 for문을
+            var result=`${response[i].title} : ${response[i].text}<br>`
+            //$("#result").append(response[i].title,":", response[i].text ,"<br>");
+            $("#result").append(result);
+          }
+
+        }
+      });
+
+
+
+    });
+  </script>
+
+</html>

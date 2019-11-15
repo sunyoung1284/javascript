@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        #chatroom {
+            width: 600px;
+            margin-bottom: 2px;
+            display:flex;
+        }
+
+        #chats {
+            border: 1px solid black;
+            width: 375px;
+            height: 90vh;
+            overflow: scroll;
+            float: left;
+        }
+
+        #users {
+            border: 1px solid black;
+            border-left: none;
+            float: right;
+            width: 200px;
+            height: 90vh;
+        }
+
+        #message {
+            width: 400px;
+        }
+
+        .user {
+            padding: 4px;
+            background-color: #cecece;
+        }
+
+        #userCount {
+            padding: 5px;
+            background-color: black;
+            color: white;
+            border-bottom: 1px solid white;
+        }
+
+        .timeago {
+            color: #cecece;
+            float: right;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chatroom">
+    <div id="chats">
+
+    </div>
+    <div id="users">
+        <div id="userCount"><span id="count">0</span> Users Online</div>
+        <div id="connectedUserList"></div>
+    </div>
+
+</div>
+<div>
+    <input type="text" name="messages" id="message">
+    <input type="button" id="sendMsg" value="send">
+</div>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+</script>
+</html>

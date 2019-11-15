@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  편명/항공기명/좌석수/출발지/목적지/출발시각/도착시간 <br>
+  <span id="result"></span>
+  <input type="button" id="flightBtn" value="항공편 입력">
+  <input type="button" id="aircraftBtn" value="항공기 입력">
+  <span></span>
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+<script>
+  $.ajax({
+    url: `http://localhost/join`,
+    data: {
+
+    },
+    success: function(response) {
+      $("#result").html("");
+      for (var i = 0; i < response.length; i++) {
+        var result = `${response[i].flightName} /${response[i].aircraftName} /${response[i].seats} /${response[i].departure} /${response[i].arrival} /${response[i].departTime} /${response[i].arrivalTime}`
+        var no = response[i].no
+        $("#result").append(`${result} <br>`);
+      }
+    }
+  });
+
+  $("#flightBtn").click(function() {
+    location.href = "/insertFlightPage"
+  });
+
+  $("#aircraftBtn").click(function() {
+    location.href = "/insertAircraftPage"
+  });
+</script>
+
+</html>

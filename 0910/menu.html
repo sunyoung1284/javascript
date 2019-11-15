@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <div class="mon">
+  </div>
+  <div class="tue">
+  </div>
+  <div class="wed">
+  </div>
+  <div class="thu">
+  </div>
+  <div class="fri">
+  </div>
+  <input type="button" name="" value="그래프 그려!" id="graphBtn">
+  <input type="button" name="" value="엑셀 다운로드!" id="excelBtn">
+  <div id="menuScore"></div>
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    var week=["월","화","수","목","금"];
+    var arr;
+    var menu = [];
+    var monBox = "";
+    var tueBox = "";
+    var wedBox = "";
+    var thuBox = "";
+    var friBox = "";
+    var average;
+    var optionBox = "";
+
+    $.ajax({
+      url: `http://localhost/request`,
+      data: {},
+      success: function(response) {
+        // 요일 별 메뉴로 split 해놓기
+        var mon = response[0].split(",")
+        var tue = response[1].split(",")
+        var wed = response[2].split(",")
+        var thu = response[3].split(",")
+        var fri = response[4].split(",")
+
+        var monAvg = 0 ;
+        var tueAvg = 0;
+        var wedAvg = 0;
+        var thuAvg = 0;
+        var friAvg = 0;
+
+        // 0~10점까지 셀렉트 박스
+        for (var i = 0; i <= 10; i++) {
+          optionBox += `<option value="${i}">${i}</option>`
+        }
+
+        // 요일별로 메뉴 띄워주기! 셀렉트 박스도 만들어주
+        for (var i = 0; i < mon.length; i++) {
+          $('.mon').html("");
+          monBox += mon[i] + `<select name="mon">` + optionBox + `</select><br>`
+          $('.mon').append(monBox + '<br>');
+        }
+        for (var i = 0; i < tue.length; i++) {
+          $('.tue').html("");
+          tueBox += tue[i] + `<select name="tue">` + optionBox + `</select><br>`
+          $('.tue').append(tueBox + '<br>');
+        }
+        for (var i = 0; i < wed.length; i++) {
+          $('.wed').html("");
+          wedBox += wed[i] + `<select name="wed">` + optionBox + `</select><br>`
+          $('.wed').append(wedBox + '<br>');
+        }
+        for (var i = 0; i < thu.length; i++) {
+          $('.thu').html("");
+          thuBox += thu[i] + `<select name="thu">` + optionBox + `</select><br>`
+          $('.thu').append(thuBox + '<br>');
+        }
+        for (var i = 0; i < fri.length; i++) {
+          $('.fri').html("");
+          friBox += fri[i] + `<select name="fri">` + optionBox + `</select><br>`
+          $('.fri').append(friBox + '<br>');
+        }
+
+
+        // 그래프 그려! 버튼을 눌렀을 때
+        $("#graphBtn").click(function() {
+          // 요일별로 식단 평균 구하기
+          for (var i=0; i< mon.length; i++){
+            monAvg += Number(($("select[name=mon]")[i].value))
+          }
+          for (var i=0; i< tue.length; i++){
+            tueAvg += Number(($("select[name=tue]")[i].value))
+          }
+          for (var i=0; i< wed.length; i++){
+            wedAvg += Number(($("select[name=wed]")[i].value))
+          }
+          for (var i=0; i< thu.length; i++){
+            thuAvg += Number(($("select[name=thu]")[i].value))
+          }
+          for (var i=0; i< fri.length; i++){
+            friAvg += Number(($("select[name=fri]")[i].value))
+          }
+
+          monAvg = monAvg /mon.length
+          tueAvg = tueAvg /tue.length
+          wedAvg = wedAvg /wed.length
+          thuAvg = thuAvg /thu.length
+          friAvg = friAvg /fri.length
+
+          arr = [];
+          average = [];
+          average[0] = monAvg
+          average[1] = tueAvg
+          average[2] = wedAvg
+          average[3] = thuAvg
+          average[4] = friAvg
+
+          for(var i=0; i<average.length; i++){
+            arr.push([week[i],average[i]])
+          }
+
+          // 구글차트
+          google.charts.load('current', {
+            packages: ['corechart', 'line']
+          });
+          google.charts.setOnLoadCallback(drawCurveTypes);
+        });
+
+        // 엑셀 다운로드! 버튼을 눌렀을 때
+        $("#excelBtn").click(function() {
+          var total = {};
+          var temp = [];
+
+          for (var i=0; i< mon.length; i++){
+            monAvg += Number(($("select[name=mon]")[i].value))
+            temp.push(Number(($("select[name=mon]")[i].value)))
+          }
+          console.log(temp);
+          total.monTotal = temp;
+          temp = [];
+          for(var i=0; i< tue.length; i++){
+            tueAvg += Number(($("select[name=tue]")[i].value))
+            temp.push(Number(($("select[name=tue]")[i].value)))
+          }
+          total.tueTotal = temp;
+          temp = [];
+          for(var i=0; i< wed.length; i++){
+            wedAvg += Number(($("select[name=wed]")[i].value))
+            temp.push(Number(($("select[name=wed]")[i].value)))
+          }
+          total.wedTotal = temp;
+          temp = [];
+          for(var i=0; i< thu.length; i++){
+            thuAvg += Number(($("select[name=thu]")[i].value))
+            temp.push(Number(($("select[name=thu]")[i].value)))
+          }
+          total.thuTotal = temp;
+          temp = [];
+          for(var i=0; i< fri.length; i++){
+            friAvg += Number(($("select[name=fri]")[i].value))
+            temp.push(Number(($("select[name=fri]")[i].value)))
+          }
+          total.friTotal = temp;
+          temp = [];
+
+          monAvg = monAvg /mon.length
+          tueAvg = tueAvg /tue.length
+          wedAvg = wedAvg /wed.length
+          thuAvg = thuAvg /thu.length
+          friAvg = friAvg /fri.length
+
+          // 객체로 파라미터 넘겨주기
+          var obj = {
+            monday : mon,
+            tuesday : tue,
+            wednesday : wed,
+            thursday : thu,
+            friday : fri,
+            monAverage : monAvg,
+            tueAverage : tueAvg,
+            wedAverage : wedAvg,
+            thuAverage : thuAvg,
+            friAverage : friAvg,
+            eachTotal : total,
+            eachWeek : week
+
+          }
+          reqParam ={}
+          reqParam.data = obj;
+          console.log(reqParam);
+
+          $.ajax({
+            url: `http://localhost/excelFile`,
+            type:'post',
+            data: {
+              // JSON.stringify() 메서드는 JavaScript 값이나 객체를 JSON 문자열로 변환
+              param: JSON.stringify(reqParam)
+            },
+            success: function(response) {
+              location.href='/getExcelFile';
+            }
+          });
+        });
+
+        //구글 차트 함수
+        function drawCurveTypes() {
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'X');
+          data.addColumn('number', '만족도');
+          //데이터를 넣는곳
+          data.addRows(arr);
+
+          var options = {
+            // x축
+            hAxis: {
+              title: '요일'
+            },
+            // y축
+            vAxis: {
+              title: '만족도',
+              viewWindow: {
+                min: 0
+              }
+            },
+            series: {
+              1: {
+                curveType: 'function'
+              }
+            }
+          };
+
+          var chart = new google.visualization.LineChart(document.getElementById('menuScore'));
+          chart.draw(data, options);
+        }
+
+      }
+    });
+
+
+
+
+
+  </script>
+
+</body>
+
+</html>

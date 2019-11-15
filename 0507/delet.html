@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+
+  <input type="button" id="btn" value="전체삭제">
+
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+<script>
+  $("#btn").click(function() {
+        $.ajax({
+            url: `http://localhost/delete`,
+            data: {
+            },
+            success: function(response) {
+              console.log(response)
+              location.href="/form3"
+
+            }
+
+        });
+})
+  </script>
+  </html>

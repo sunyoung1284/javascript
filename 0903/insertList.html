@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  제목  <input type="text" value="" id="title"><br><br>
+  내용  <textarea name="name" rows="8" cols="80" id="content"></textarea><br>
+  <input type="button" name="" value="추가하기" id="insertBtn">
+  <body>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script>
+    //추가하기 버튼을 눌렀을때 제목과 내용을 입력받아서 post테이블에 저장
+    $("#insertBtn").click(function() {
+      var title = $("#title").val();
+      var content = $("#content").val();
+      $.ajax({
+        url: `http://localhost/insertList`,
+        data: {
+          title : title,
+          content : content
+        },
+        success: function(response) {}
+      });
+        location.href = "/"
+    });
+  </script>
+
+  </body>
+</html>

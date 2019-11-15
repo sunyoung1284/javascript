@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    이름 <input type="text" id="name"><br>
+    html <input type="text" id="html"><br>
+    javascript <input type="text" id="javascript"><br>
+    css<input type="text" id="css"><br>
+    nodejs<input type="text" id="nodejs"><br>
+    mysql<input type="text" id="mysql"><br>
+    <input type="button" value="성적입력" id= "btn1">
+    <input type="button" value="초기화" id= "btn2">,<br>
+    <span id="result"></span><br><br>
+    평균:<span id="average"></span><br>
+    최고점자 이름: <span id="besttotal"></span>
+
+    <script>
+    var count=0;
+    var htmltotal=0;
+    var javascripttotal=0;
+    var csstotal=0;
+    var nodejstotal=0;
+    var mysqltotal=0;
+
+    document.getElementById('btn1').addEventListener('click',function() {
+        var name = document.getElementById('name').value;
+        var html = Number(document.getElementById('html').value);
+        var javascript=Number(document.getElementById('javascript').value);
+        var css= Number(document.getElementById('css').value);
+        var nodejs=Number(document.getElementById('nodejs').value);
+        var mysql= Number(document.getElementById('mysql').value);
+        var totalav=(html+javascript+css+nodejs+mysql)/5;
+
+
+        document.getElementById('result').innerHTML+=`이름:${name}/html:${html}/javascript${javascript}/css${css}/nodejs${nodejs}/mysql${mysql}
+        /${name}평균:${totalav}<br>`
+
+        count++;
+        htmltotal+=html;
+        javascripttotal+=javascript
+        csstotal+=css
+        nodejstotal+=nodejs
+        mysqltotal+=mysql
+
+        document.getElementById('average').innerHTML=`html평균:${htmltotal/count}/javascript평균:${javascripttotal/count}/css평균${csstotal/count}/
+        nodejs평균:${nodejstotal/count}/mysql평균:${mysqltotal/count}/전체평균:${((htmltotal/count)+(javascripttotal/count)+(csstotal/count)+(nodejstotal/count)
+        +(mysqltotal/count))/5}`
+
+        var max=Math.max(totalav)
+
+        document.getElementById('besttotal').innerHTML=`최고평균은:${max}`
+});
+    document.getElementById('btn2').addEventListener('click',function() {
+      document.getElementById('name').value="";
+      document.getElementById('html').value="";
+      document.getElementById('javascript').value="";
+      document.getElementById('css').value="";
+      document.getElementById('nodejs').value="";
+      document.getElementById('mysql').value="";
+      document.getElementById('result').innerHTML="";
+      document.getElementById('average').innerHTML=0;
+      document.getElementById('besttotal').innerHTML="";
+    });
+    </script>
+
+
+
+
+  </body>
+</html>

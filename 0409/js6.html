@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>CSS</title>
+</head>
+
+<body>
+  <script>
+
+    var arr1=[];
+    for (var i=0; i<11; i++){
+      arr1[i]=i+1
+    }
+      // 1,2,3,4,5,6,7,8,9,10,11
+    var arr2=[];
+    for (var i=0; i<11; i++){
+      arr2[i]=i*2
+    }
+    // 0,2,4,6,8,10,12,14,16,18,20
+
+
+    console.log(arr1);
+    console.log(arr2);
+
+    var arr3=[];
+    for (var i =0; i<8; i++){
+      arr3[i]="abc"+[i+1]
+    }
+    console.log(arr3);
+    // abc1 abc2~
+
+    var arr4=[];
+    for (var i=0; i<9; i++){
+      arr4[i]=i*3+1;
+    }
+    console.log(arr4);
+    //1,4,7,10,13,16,19,22,25
+
+
+    var arr5=[];
+    for(var i=0; i<12; i++){
+      arr5[i]=i%2
+    }
+    console.log(arr5)
+    //0,1,0,1,0,1,0,1
+
+    var arr6=[];
+      for(var i=0; i<12; i++){
+        arr6[i]=i%4
+      }
+      console.log(arr6)
+    //0,1,2,3,0,1,2,3,0,1,2,3
+    var arr7=[];
+    var t= "";
+    for(var i=0; i<5; i++){
+      t=t+"text";
+      arr7[i]=t;
+    }
+    console.log(arr7)
+    //text ,texttext ...
+    var arr8=[];
+    var n=1;
+    for(var i=0; i<8; i++){
+      arr8[i]=n;
+      n=n*10;
+
+    }
+      console.log(arr8)
+    //1,10,100,1000
+
+    var arr9=[];
+    arr9[0]=0;
+    for(var i=2; i<10; i+=2){
+      arr9[i/2]=arr9[i/2 - 1]+10;
+    }
+    console.log(arr9);
+    //0,10,20,30,40
+
+    var arr10=[];
+    for(var i=4; i<16; i=i+4){
+      for(var j=0; j<4; j++){
+        arr10[i-4+j]=i-j;
+      }
+    }
+    console.log(arr10)
+    //4,3,2,1,8,7,6,5,12,11,10,9
+
+    // var arr11=[];
+    // for(var i=0; i<201; i++){
+    //   arr11[0]=0;
+    //   if (i%3=0){
+    //     arr11[i]=i+"짝"
+    //   }else{
+    //     arr11[i]=i
+    //   }
+    // }
+    // console.log(arr11)
+
+
+
+      for (var i =1; i< 200; i++){
+        console.log(i);
+        var str = i+ "";
+        for(var j=0; j< str.length; j++){
+          if(str[j] == 3 || str[j] == 6 ||str[j] == 9){
+          console.log("짝");
+          break;
+        }
+      }
+    }
+
+    for (var i=1; i<200; i++){
+      console.log(i);
+      var strr=i+"";
+      for(var j=0; j<strr.length; j++){
+        if(strr[j]==2||strr[j]==4||strr[j]==8){
+          console.log("쿵");
+        }
+      }
+    }
+
+    var arr11=[];
+    for(var i=0; i <5; i++){
+      arr11[i]=i*i;
+    }
+    console.log(arr11);
+    //0,1,4,9,16
+    var arr12=[];
+    for(var i=0; i<5; i++){
+      if(i%2==0){
+        arr12[i]="j"
+      }else{
+      arr12[i]="H"
+    }}
+    console.log(arr12)
+    //j,H,j,H...
+
+    var arr13=[];
+    for(var i=4; i<16; i=i+4){
+      for(var j=0; j<4; j++){
+        arr13[i-4+j]=i-j
+      }
+    }
+    console.log(arr13)
+    //4,3,2,1,8,7,6,5,12,11,10,9
+
+
+  </script>
+</body>
+
+</html>

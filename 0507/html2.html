@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <input type="button" id="writeBtn" value="글쓰기">
+  <input type="button" id="deleteBtn" value="전체삭제"><br>
+  <span id="result"></span>
+
+
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+<script>
+  $.ajax({
+    url: `http://localhost/newList2`,
+    data: {
+
+    },
+    success: function(response) {
+      $("#result").html("");
+      for (var i = 0; i < response.length; i++) {
+        var result = `제목: ${response[i].title} / 내용: ${response[i].text} / 작성자: ${response[i].writer}`
+        var no = response[i].no
+        $("#result").append(`${result} <input type="button" value="삭제" onclick="numberClick(${no})">
+        <input type="button" value="수정" onclick="updateClick(${no})"><br>`);
+      }
+    }
+  });
+
+
+  function updateClick(no) {
+
+     location.href = `/updateform?${no}`
+  };
+
+
+  function numberClick(number) {
+    $.ajax({
+      url: `/eachDelete`,
+      data: {
+        number: number
+      },
+      success: function(response) {
+        location.href = "/form3"
+      }
+    })
+  };
+
+
+  $("#writeBtn").click(function() {
+    location.href = "/form5"
+  });
+
+  $("#deleteBtn").click(function() {
+    $.ajax({
+      url: `http://localhost/delete`,
+      data: {
+
+      },
+      success: function(response) {
+        location.href = "/form3"
+      }
+    });
+  });
+</script>
+
+</html>

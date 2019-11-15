@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style media="screen">
+    .item {
+      background-color: #eee;
+      float: left;
+      margin: 10px 10px 10px 10px;
+      width: 150px;
+      padding: 10px;
+      height: 150px;
+      font-size: 20px;
+      text-align: center;
+      font: normal 13px/1.5 Georgia, Serif;
+    }
+
+    .itemName {
+      font: normal 20px/1.5 Georgia, Serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="allItem">
+
+  </div>
+
+  <div id="shoppingCart">
+    <br>
+    수량 : <input type="text" name="" value="" id="buyNum"><br>
+    ID : <input type="text" name="" value="" id="userId"><br>
+    <input type="button" name="" value="주문하기" id="buyBtn">
+
+
+  </div>
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+  var no = location.href.split('=')[1]
+
+  $.ajax({
+    url: `/orderItem`,
+    data: {
+      no: no
+    },
+    success: function(response) {
+      var result = `<div class="item">`
+      result += `<br><div class="itemName">${response[0].name}</div>`
+      result += `<div>price : ${response[0].price}</div>`
+      result += `<div>재고 : ${response[0].inventory}</div>`
+      result += `<div>`
+      $("#allItem").append(`${result} <br>`);
+
+      $("#buyBtn").click(function() {
+        var buyNum = $("#buyNum").val();
+        var userId = $("#userId").val();
+        var inventory = response[0].inventory
+        if (buyNum > response[0].inventory) {
+          alert("재고보다 작게 쓰라구")
+        }
+        $.ajax({
+          url: `/insertOrderTable`,
+          data: {
+            buyNum: buyNum,
+            userId: userId,
+            no: no,
+            inventory:inventory
+          },
+          success: function(response) {
+            alert("구매완료!")
+            opener.window.location = `/`;
+            close();
+          }
+        })
+
+
+      });
+
+    }
+  });
+</script>
+
+</html>

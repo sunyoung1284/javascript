@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <span id="priceView"></span><br><br>
+  <span id="selectView"></span><br><br>
+  <input type="button" value="ajax" id="Btn">
+  <input type="button" value="불러와" id="selectBtn">
+  <input type="button" value="그래프보여주까?" id="chartBtn">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <div id="chart_div"></div>
+
+
+</body>
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+  var arr;
+  $("#Btn").click(function() {
+    timer = setInterval(function() {
+      $.ajax({
+        url: `/requestTest2`,
+        data: {},
+        success: function(res) {
+          console.log(res);
+
+          var price = res
+          $("#priceView").append(`${price} <br>`);
+          $.ajax({
+            url: `http://localhost/insertPrice`,
+            data: {
+              price: price
+            },
+            success: function(response) {}
+          })
+        }
+      })
+    }, 2000)
+  });
+
+
+  $("#selectBtn").click(function() {
+    $.ajax({
+      url: `http://localhost/priceSelect`,
+      data: {},
+      success: function(response) {
+        $("#selectView").html("");
+        for (var i = 0; i < response.length; i++) {
+          var result = `${response[i].time} /${response[i].price} `
+          $("#selectView").append(`${result} <br>`);
+        }
+      }
+    });
+  });
+
+  $("#chartBtn").click(function() {
+    arr = [];
+    $.ajax({
+      url: `http://localhost/priceSelect`,
+      data: {},
+      success: function(response) {
+        var price = []
+        var time = []
+
+        for (var i = 0; i < response.length; i++) {
+          price[i] = response[i].price
+          time[i] = response[i].time
+
+          var date = time[i].split('T')[0].split('-')
+          var time = time[i].split('T')[1].split('.')[0].split(':')
+          time[0] = Number(time[0])+9
+          var realtime = new Date(date[0],Number(date[1])-1,date[2],time[0],time[1],time[2])
+          // time[i] = time[i].replace(':', '')
+          // time[i] = time[i].replace(':', '')
+
+          arr.push([realtime, price[i]])
+        }
+
+        google.charts.load('current', {
+          packages: ['corechart', 'line']
+        });
+        google.charts.setOnLoadCallback(drawCurveTypes);
+      }
+    });
+  });
+
+  function drawCurveTypes() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('datetime', 'time');
+    data.addColumn('number', 'Samsung');
+
+
+    data.addRows(arr);
+
+    var options = {
+
+      hAxis: {
+        title: 'Time'
+      },
+      vAxis: {
+        title: 'Price',
+        viewWindow: {
+          // min: 44000,
+          // max: 45000
+
+        }
+      },
+      series: {
+        1: {
+          curveType: 'function'
+        }
+      }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>
+
+</html>

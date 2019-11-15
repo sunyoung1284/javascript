@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>CSS</title>
+</head>
+
+<body>
+  <script>
+
+  var arr = [];
+    for (i=0; i<5; i++){
+        arr[i]=[];
+        for(j=0; j<5; j++){
+          arr[i][j]=i*5+j+1
+      }
+    }
+
+console.log(arr);
+
+  var arr2=[];
+    for (i=0; i<5; i++){
+      arr2[i]=[];
+      for (j=0; j<5; j++){
+        arr2[i][j]=(i*15)+(j+j*2+1)
+      }
+    }
+
+    console.log(arr2);
+
+  var arr3=[];
+    for(i=0; i<5; i++){
+      arr3[i]=[];
+      for(j=0; j<5; j++){
+        arr3[i][j]= i*j
+      }
+    }
+      console.log(arr3);
+
+  var arr4 =[];
+    for(i=0; i<5; i++){
+      arr4[i]=[];
+
+      for(j=0; j<5; j++){
+        var srt=i+""
+        var srt1=j+""
+
+        arr4[i][j]=srt+srt1 // arr4[i][j]=""+i+j;
+      }
+    }
+    console.log(arr4);
+
+    var arr5=[];
+    var num=0;
+    for (var i=0; i<5; i++){
+      arr5[i]=[];
+      for(var j=0; j<5; j++){
+
+        arr5[i][j]=num;
+        num+= i*2+ j*3;
+
+      }
+    }
+    console.log(arr5)
+
+    var arr6 =[];
+    for(var i=1; i<10; i=i+3){
+      arr6[(i+2)/3-1]=[];
+      for(var j=0; j<5; j++){
+        arr6[(i+2)/3-1][j]=i*j;
+          }
+
+    }
+  console.log(arr6)
+
+
+
+
+
+
+
+
+    var cars= [];
+    var car2={};
+    var car1={};
+    car1.color="red"
+    car1.weight="500kg"
+    car1.accidentHistory=[];
+    car1.accidentHistory[0]='20110301'
+    car1.accidentHistory[1]='20110601'
+    car2.name='boboboo'
+    cars[0]=car1,cars[1]=car2;
+    cars[2]={
+      name:"abbbb",
+      age:123
+    }
+    console.log(cars);
+
+  </script>
+</body>
+
+</html>

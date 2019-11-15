@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <div id="result"> </div>
+
+  <div id="page">
+  </div>
+
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+<script type="text/javascript">
+  var totalData = 0; // 총 데이터 수
+  var dataPerPage = 10; // 한 페이지에 나타낼 데이터 수
+  var pageCount = 7; // 한 화면에 나타낼 페이지 수
+  var currentPage = 1;
+
+  $.ajax({
+    url: `/countItem`,
+    data: {},
+    success: function(response) {
+      totalData = response[0].totalData;
+
+      paging(1);
+
+
+    }
+  })
+
+
+  function paging(currentPage) {
+    var firstPage = 1;
+    var finishPage = Math.ceil(totalData / dataPerPage);
+    var result = "";
+
+    $.ajax({
+      url: `/selectItem`,
+      data: {
+        currentPage: currentPage
+      },
+      success: function(response) {
+        $("#result").html("");
+        for (var i = 0; i < response.length; i++) {
+          // result += ` ${response[i].no}   ${response[i].name}   ${response[i].price} `
+          // $("#result").append(`${result} <br>`);
+          result = ` ${response[i].no}   ${response[i].name}   ${response[i].price}  <br>`
+          $("#result").html(`${$("#result").html()}${result} `);
+        } //$("#result").html() 파라미터 없을땐 원래 거 들고오기!
+
+        var pageNum="";
+        var left = `<span onClick="paging(${1})"> ≪ </span>`
+        var right = `<span onClick="paging(${finishPage})"> ≫ </span>`
+
+        if(currentPage<=3){
+          $("#page").html("");
+          var startPage = 1
+          var lastPage = startPage+6
+          var left4 = `<span onClick="paging(${startPage})"> ＜ </span>`
+          var right4 = `<span onClick="paging(${currentPage+4})"> ＞ </span>`
+          $("#page").append(`${left} `);
+          $("#page").append(`${left4} `);
+          for (var i = startPage; i <= lastPage; i++) {
+            if(i==currentPage){
+              pageNum += `<span onClick="paging(${i})"> <U>${i}</U> </span>`
+            }else{
+              pageNum += `<span onClick="paging(${i})"> ${i} </span>`
+            }
+          }
+          $("#page").append(`${pageNum} `);
+          $("#page").append(`${right4} `);
+          $("#page").append(`${right} `);
+
+        }else if(currentPage>=finishPage-3) {
+          $("#page").html("");
+          var startPage = currentPage-3
+          var lastPage = finishPage
+          var left4 = `<span onClick="paging(${currentPage-4})"> ＜ </span>`
+          var right4 = `<span onClick="paging(${lastPage})"> ＞ </span>`
+          $("#page").append(`${left} `);
+          $("#page").append(`${left4} `);
+          for (var i = startPage; i <= lastPage; i++) {
+            if(i==currentPage){
+              pageNum += `<span onClick="paging(${i})"> <U>${i}</U> </span>`
+            }else{
+              pageNum += `<span onClick="paging(${i})"> ${i} </span>`
+            }
+          }
+          $("#page").append(`${pageNum} `);
+          $("#page").append(`${right4} `);
+          $("#page").append(`${right} `);
+        }else{
+          $("#page").html("");
+          var startPage = currentPage-3
+          var lastPage = currentPage+3
+          var left4 = `<span onClick="paging(${currentPage-4})"> ＜ </span>`
+          var right4 = `<span onClick="paging(${currentPage+4})"> ＞ </span>`
+          $("#page").append(`${left}`);
+          $("#page").append(`${left4} `);
+          for (var i = startPage; i <= lastPage; i++) {
+            if(i==currentPage){
+              pageNum += `<span onClick="paging(${i})"> <U>${i}</U> </span>`
+            }else{
+              pageNum += `<span onClick="paging(${i})"> ${i} </span>`
+            }
+          }
+          $("#page").append(`${pageNum}`);
+          $("#page").append(`${right4} `);
+          $("#page").append(`${right} `);
+
+        }
+
+      }
+    })
+  }
+</script>
+
+</html>

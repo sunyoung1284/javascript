@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>메인페이지</title>
+  <style>
+    .item {
+      background-color: #eee;
+      float: left;
+      margin: 10px 10px 10px 10px;
+      width: 150px;
+      padding: 10px;
+      height: 150px;
+      font-size: 20px;
+      text-align: center;
+      font: normal 13px/1.5 Georgia, Serif;
+    }
+
+    .buyBtn {
+      background-color: black;
+      font: normal 13px/1.5 Georgia, Serif;
+      color: #fff;
+    }
+
+    .itemName {
+      font: normal 20px/1.5 Georgia, Serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="allItem">
+
+
+  </div>
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+  $.ajax({
+    url: `/selectItem`,
+    data: {},
+    success: function(response) {
+      $("#allItem").html("");
+      for (var i = 0; i < response.length; i++) {
+        var result = `<div class="item">`
+        result += `<br><div class="itemName">${response[i].name}</div>`
+        result += `<div>price : ${response[i].price}</div>`
+        result += `<div>재고 : ${response[i].inventory}</div>`
+        if(response[i].inventory == 0){
+          result += `<br><span>!!품절!!</spans><br>`
+        }else{
+          result += `<br><input type="button" name="" value="구매하기" class="buyBtn" onclick="numberClick(${response[i].no})"><br>`
+        }
+        result += `<div>`
+        $("#allItem").append(`${result} <br>`);
+      }
+
+    }
+  });
+
+
+
+  function numberClick(no) {
+    var url = `/order?no=${no}`
+    window.open(url, "order", `width=400,height=200, left=600,location=no`);
+  };
+</script>
+
+</html>

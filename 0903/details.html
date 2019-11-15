@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  제목 <input type="text" value="" id="title"><br><br>
+  내용 <textarea name="name" rows="8" cols="80" id="content"></textarea><br>
+  <input type="button" value="수정하기" id="updateBtn">
+  <input type="button" value="삭제하기" id="deleteBtn">
+  <input type="button" value="목록으로" id="homeBtn">
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script>
+    //현재 url 받아오기
+    var url = window.location.href
+    //url split해서 no 파라미터 받아오기
+    var no = url.split('=')[1]
+    //no에대한 데이터만 셀렉트 해오기
+    $.ajax({
+      url: `http://localhost/selectDetails`,
+      data: {
+        no:no
+      },
+      success: function(response) {
+        //input박스에 불러온 타이틀이랑 내용 가져오기
+        $("#title").val(response[0].title);
+        $("#content").val(response[0].content);
+      }
+    });
+    //수정하기 버튼 눌렀을 때 input 내용으로 업데이트
+    $("#updateBtn").click(function() {
+      //확인 받는 alert창 띄우기
+      if(confirm("수정할꺼야?")){
+      var title = $("#title").val();
+      var content = $("#content").val();
+      $.ajax({
+        url: `http://localhost/updateDetails`,
+        data: {
+          title : title,
+          content : content,
+          no : no
+        },
+        success: function(response) {
+        }
+      });
+    }
+        location.href = `/details?no=${no}`
+    });
+
+    //삭제하기 버튼 눌렀을때 no만 삭제
+    $("#deleteBtn").click(function() {
+      $.ajax({
+        url: `http://localhost/deleteDetails`,
+        data: {
+          no : no
+        },
+        success: function(response) {}
+      });
+        location.href = `/`
+    });
+
+    $("#homeBtn").click(function() {
+      location.href = "/"
+    });
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <select name="select" id="selectView">
+    <option id="samsung">삼성전자</option>
+    <option id="lg">LG전자</option>
+    <option id="kakao">카카오</option>
+    <option id="hyundai">현대차</option>
+    <option id="hynix">SK하이닉스</option>
+  </select>
+  <input type="button" id="startBtn" value="시작" onclick="">
+  경과시간 : <span id = "timerView"> </span><br>
+  <input type="button" value="삼성" id="Btn1">
+  <input type="button" value="LG" id="Btn2">
+  <input type="button" value="카카오" id="Btn3">
+  <input type="button" value="현대차" id="Btn4">
+  <input type="button" value="SK하이닉스" id="Btn5">
+
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <div id="chart_div"></div>
+
+
+</body>
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+  var cnt = 0;
+  var timer
+  timer = setInterval(function() {
+    cnt++;
+    $("#timerView").html(cnt)
+  }, 1000);
+
+$('#selectView').on('change', function() {
+  var value = $(this).val();
+  alert(value);
+});
+  var arr;
+  var arr1;
+  $("#Btn1").click(function() {
+    timer = setInterval(function() {
+      $.ajax({
+        url: `/requestTest1`,
+        data: {},
+        success: function(res) {
+          console.log(res);
+          var price = res
+          $.ajax({
+            url: `http://localhost/insertPrice1`,
+            data: {
+              price: price
+            },
+            success: function(response) {
+            }
+          })
+        }
+      })
+
+      arr = [];
+      $.ajax({
+        url: `http://localhost/priceSelect`,
+        data: {},
+        success: function(response) {
+          var price = []
+          var time = []
+          for (var i = 0; i < response.length; i++) {
+            price[i] = response[i].price
+            time[i] = response[i].time
+
+            var date = time[i].split('T')[0].split('-')
+            var time = time[i].split('T')[1].split('.')[0].split(':')
+            time[0] = Number(time[0]) + 9
+            var realtime = new Date(date[0], Number(date[1]) - 1, date[2], time[0], time[1], time[2])
+
+            arr.push([realtime, price[i]])
+          }
+
+          google.charts.load('current', {
+            packages: ['corechart', 'line']
+          });
+          google.charts.setOnLoadCallback(drawCurveTypes);
+        }
+      });
+    }, 1000)
+  });
+
+  $("#Btn2").click(function() {
+    timer = setInterval(function() {
+      $.ajax({
+        url: `/requestTest2`,
+        data: {},
+        success: function(res) {
+          console.log(res);
+          var price = res
+          $.ajax({
+            url: `http://localhost/insertPrice2`,
+            data: {
+              price: price
+            },
+            success: function(response) {
+            }
+          })
+        }
+      })
+      arr = [];
+      $.ajax({
+        url: `http://localhost/priceSelect2`,
+        data: {},
+        success: function(response) {
+          var price = []
+          var time = []
+          for (var i = 0; i < response.length; i++) {
+            price[i] = response[i].price
+            time[i] = response[i].time
+
+            var date = time[i].split('T')[0].split('-')
+            var time = time[i].split('T')[1].split('.')[0].split(':')
+            time[0] = Number(time[0]) + 9
+            var realtime = new Date(date[0], Number(date[1]) - 1, date[2], time[0], time[1], time[2])
+
+            arr.push([realtime, price[i]])
+          }
+
+          google.charts.load('current', {
+            packages: ['corechart', 'line']
+          });
+          google.charts.setOnLoadCallback(drawCurveTypes);
+        }
+      });
+    }, 1000)
+  });
+
+  $("#Btn3").click(function() {
+    timer = setInterval(function() {
+      $.ajax({
+        url: `/requestTest3`,
+        data: {},
+        success: function(res) {
+          console.log(res);
+          var price = res
+          $.ajax({
+            url: `http://localhost/insertPrice3`,
+            data: {
+              price: price
+            },
+            success: function(response) {
+            }
+          })
+        }
+      })
+      arr = [];
+      $.ajax({
+        url: `http://localhost/priceSelect3`,
+        data: {},
+        success: function(response) {
+          var price = []
+          var time = []
+          for (var i = 0; i < response.length; i++) {
+            price[i] = response[i].price
+            time[i] = response[i].time
+
+            var date = time[i].split('T')[0].split('-')
+            var time = time[i].split('T')[1].split('.')[0].split(':')
+            time[0] = Number(time[0]) + 9
+            var realtime = new Date(date[0], Number(date[1]) - 1, date[2], time[0], time[1], time[2])
+
+            arr.push([realtime, price[i]])
+          }
+
+          google.charts.load('current', {
+            packages: ['corechart', 'line']
+          });
+          google.charts.setOnLoadCallback(drawCurveTypes);
+        }
+      });
+    }, 1000)
+  });
+
+  $("#Btn4").click(function() {
+    timer = setInterval(function() {
+      $.ajax({
+        url: `/requestTest4`,
+        data: {},
+        success: function(res) {
+          console.log(res);
+          var price = res
+          $.ajax({
+            url: `http://localhost/insertPrice4`,
+            data: {
+              price: price
+            },
+            success: function(response) {
+            }
+          })
+        }
+      })
+      arr = [];
+      $.ajax({
+        url: `http://localhost/priceSelect4`,
+        data: {},
+        success: function(response) {
+          var price = []
+          var time = []
+          for (var i = 0; i < response.length; i++) {
+            price[i] = response[i].price
+            time[i] = response[i].time
+
+            var date = time[i].split('T')[0].split('-')
+            var time = time[i].split('T')[1].split('.')[0].split(':')
+            time[0] = Number(time[0]) + 9
+            var realtime = new Date(date[0], Number(date[1]) - 1, date[2], time[0], time[1], time[2])
+
+            arr.push([realtime, price[i]])
+          }
+
+          google.charts.load('current', {
+            packages: ['corechart', 'line']
+          });
+          google.charts.setOnLoadCallback(drawCurveTypes);
+        }
+      });
+    }, 1000)
+  });
+
+
+  $("#Btn5").click(function() {
+    timer = setInterval(function() {
+      $.ajax({
+        url: `/requestTest5`,
+        data: {},
+        success: function(res) {
+          console.log(res);
+          var price = res
+          $.ajax({
+            url: `http://localhost/insertPrice5`,
+            data: {
+              price: price
+            },
+            success: function(response) {
+            }
+          })
+        }
+      })
+      arr = [];
+      $.ajax({
+        url: `http://localhost/priceSelect5`,
+        data: {},
+        success: function(response) {
+          var price = []
+          var time = []
+          for (var i = 0; i < response.length; i++) {
+            price[i] = response[i].price
+            time[i] = response[i].time
+
+            var date = time[i].split('T')[0].split('-')
+            var time = time[i].split('T')[1].split('.')[0].split(':')
+            time[0] = Number(time[0]) + 9
+            var realtime = new Date(date[0], Number(date[1]) - 1, date[2], time[0], time[1], time[2])
+
+            arr.push([realtime, price[i]])
+          }
+
+          google.charts.load('current', {
+            packages: ['corechart', 'line']
+          });
+          google.charts.setOnLoadCallback(drawCurveTypes);
+        }
+      });
+    }, 1000)
+  });
+
+
+
+
+
+
+
+
+
+
+
+  function drawCurveTypes() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('datetime', 'time');
+    data.addColumn('number', 'price');
+    data.addRows(arr);
+
+    var options = {
+      hAxis: {
+        title: 'Time'
+      },
+      vAxis: {
+        title: 'Price',
+        viewWindow: {
+          // min: 44000,
+          // max: 45000
+        }
+      },
+      series: {
+        1: {
+          curveType: 'function'
+        }
+      }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>
+
+</html>

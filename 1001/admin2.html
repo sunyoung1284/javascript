@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+    table {
+      width: 100%;
+      border: 1px solid #eee;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #eee;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <table id="allOderTable" class="table">
+      <th>고객ID</th>
+      <th>제품명</th>
+      <th>단가</th>
+      <th>수량</th>
+      <th>총액</th>
+      <th>주문날짜</th>
+      <th></th>
+
+    </table>
+
+
+  </div>
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script>
+    var result = ""
+    var orderTable;
+    var cancleCount = 0;
+    // $.ajax({
+    //   url: `/orderTableSelect`,
+    //   data: {},
+    //   success: function(response) {
+    //     orderTable = response;
+    //     $.ajax({
+    //       url: `/selectItem`,
+    //       data: {},
+    //       success: function(response) {
+    //         for (var i = 0; i < orderTable.length; i++) {
+    //           for (var j = 0; j < response.length; j++) {
+    //             if (orderTable[i].itemNo == response[j].no) {
+    //               orderTable[i].itemName = response[j].name
+    //               orderTable[i].price = response[j].price
+    //               orderTable[i].totalPrice = (response[j].price) * (orderTable[i].quantity)
+    //             }
+    //           }
+    //           if (orderTable[i].complete != 1) {
+    //             result = `<tr> <td> ${orderTable[i].id}</td> <td> ${orderTable[i].itemName} </td>
+    //           <td> ${orderTable[i].price}</td> <td>${orderTable[i].quantity}</td>
+    //           <td>${orderTable[i].totalPrice}</td> <td>${orderTable[i].date}</td>
+    //           <td><input type="button" name =""  value="발송완료" onclick="okClick(${orderTable[i].no})">
+    //           <input type="button" value="주문취소" onclick="cancelClick(${orderTable[i].no},${orderTable[i].itemNo},${orderTable[i].quantity})"></td></tr><br>`
+    //             $("#allOderTable").append(`${result}`);
+    //           }
+    //         }
+    //       }
+    //     })
+    //   }ㄴ
+    // })
+
+    $.ajax({
+      url: `/selectJoinTable`,
+      data: {},
+      success: function(response) {
+        console.log("리스폰스~",response)
+        for (var i = 0; i < response.length; i++) {
+          if (response[i].complete != 1) {
+            result = `<tr> <td> ${response[i].id}</td> <td> ${response[i].name} </td>
+          <td> ${response[i].price}</td> <td>${response[i].quantity}</td>
+          <td>${response[i].price * response[i].quantity}</td> <td>${response[i].date}</td>
+          <td><input type="button" name =""  value="발송완료" onclick="okClick(${response[i].no})">
+          <input type="button" value="주문취소" onclick="cancelClick(${response[i].no},${response[i].itemNo},${response[i].quantity})"></td></tr><br>`
+            $("#allOderTable").append(`${result}`);
+          }
+        }
+      }
+    })
+
+    function okClick(no) {
+      console.log(no)
+      $.ajax({
+        url: `/completeUpdate`,
+        data: {
+          complete: 1,
+          no: no
+        },
+        success: function(response) {
+          location.href = "/admin2"
+
+        }
+      })
+    }
+
+    function cancelClick(no, itemNo, quantity, ) {
+      cancleCount =
+        $.ajax({
+          url: `/orderTableCancel`,
+          data: {
+            no: no,
+            itemNo: itemNo,
+            cancelCount: quantity
+          },
+          success: function(response) {
+            location.href = "/admin2"
+
+          }
+        })
+    }
+  </script>
+
+</body>
+
+</html>

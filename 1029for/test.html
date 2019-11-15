@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    var arr = [];
+
+    for (i = 0; i < 10; i++) {
+      arr[i] = [];
+      for (j = 0; j < 10; j++) {
+        arr[i][j] = i;
+      }
+    }
+
+
+
+    var arr2 = [];
+    for (var i = 0; i < 10; i++) {
+      arr2[i] = [];
+      for (var j = 0; j < 10; j++) {
+        arr2[i][j] = j;
+      }
+    }
+
+
+    var arr3 = [];
+    for (var i = 0; i < 10; i++) {
+      arr3[i] = [];
+      for (var j = 0; j < 10; j++) {
+        if (i == j) {
+          arr3[i][j] = 1;
+        } else {
+          arr3[i][j] = 0;
+        }
+
+      }
+    }
+    var arr4 = [];
+    for (var i = 0; i < 10; i++) {
+      arr4[i] = [];
+      for (var j = 0; j < 10; j++) {
+        if (i % 2 == 1) {
+          if (j % 2 == 1) {
+            arr4[i][j] = 1;
+          } else {
+            arr4[i][j] = 0;
+          }
+        } else {
+          if (j % 2 == 1) {
+            arr4[i][j] = 0;
+          } else {
+            arr4[i][j] = 1;
+          }
+        }
+      }
+    }
+
+    // console.log(arr4);
+
+    var arr5 = [];
+    for (var i = 0; i < 10; i++) {
+      arr5[i] = [];
+      for (var j = 0; j < 10; j++) {
+        arr5[i][j] = i % 2 == 0 && j % 2 == 0 || i % 2 == 1 && j % 2 == 1 ? 1 : 0
+      }
+    }
+    console.log(arr5);
+
+
+    var arr6 = [];
+    var num = 0;
+    for (var i = 0; i < 10; i++) {
+      arr6[i] = [];
+      for (var j = 0; j < 10; j++) {
+        if (i > 0 && j == 0) {
+
+        } else if (num) {
+          num = 0;
+        } else {
+          num = 1;
+        }
+        arr6[i][j] = num;
+      }
+    }
+
+    var arr7 = [];
+    var num = 1;
+    for (var i = 0; i < 10; i++) {
+      arr7[i] = [];
+      for (var j = 0; j < 10; j++) {
+        if (i > 0 && j == 0) {
+
+        } else if (num) {
+          num = 0;
+        } else {
+          num = 1;
+        }
+        arr7[i][j] = num;
+      }
+    }
+
+    var arr8 = [];
+
+    for (var i = 0; i < 10; i++) {
+      arr8[i] = [];
+      for (var j = 0; j < 10; j++) {
+        arr8[i][j] = Math.floor(Math.random() * 10) ;
+        if(arr8[i][j]==7){
+          arr8[i][j]="lucky seven"
+        }
+
+      }
+    }
+
+    var arr9 = [];
+    var count =0;
+    var length=Math.floor(Math.random()*11)+10;
+
+    for (var i = 0; i < length; i++) {
+      arr9[i] = Math.floor(Math.random() * 6) ;
+      if(arr9[i]==3){
+        count++
+      }
+    }
+
+    var arr10 = [];
+
+    for (var i = 0; i < 6; i++) {
+      arr10[i] = Math.floor(Math.random() * 20)+1;
+      for(var j=0; j<i; j++){
+        if(arr10[i]==arr10[j]){
+          i--;
+        }
+      }
+    }
+    //
+    // console.log(arr10);
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    숫자1 <input type="text" id="number1"> <br>
+    숫자2 <input type="text" id="number2"><br>
+    <input type="button" id="btn" value="계산">
+    <input type="button" id="btn1" value="리셋"><br>
+
+
+    <span id="result"></span><br><br><br>
+    총합 :<span id="total"></span>
+    횟수 :<span id="count"></span>
+
+
+
+    <script>
+    var count= 0;
+    var total=0;
+
+
+
+
+    document.getElementById('btn').addEventListener('click',function() {
+      var number1= Number(document.getElementById('number1').value)
+      var number2= Number(document.getElementById('number2').value)
+      var result='';
+
+
+      result=`${number1}*${number2}=${number1*number2}<br>`
+
+
+
+      document.getElementById('result').innerHTML+=result
+      total+=(number1*number2);
+      document.getElementById('total').innerHTML=total
+
+
+      count++;
+
+      document.getElementById('count').innerHTML=count;
+    });
+    document.getElementById('btn1').addEventListener('click',function() {
+      count=0;
+      total=0;
+      document.getElementById('result').innerHTML="";
+      document.getElementById('total').innerHTML="";
+      document.getElementById('count').innerHTML="";
+
+    });
+    </script>
+
+  </body>
+</html>

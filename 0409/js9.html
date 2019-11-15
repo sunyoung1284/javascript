@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    0 <input type="radio" name="radio1" id =radio1>
+    1<input type="radio" name="radio1" id =radio2>
+    2<input type="radio" name="radio1" id =radio3>
+    가중치 <input type="text" id="plus1"><br>
+    0 <input type="radio" name="radio2" id =radio3>
+    1<input type="radio" name="radio2" id =radio4>
+    2<input type="radio" name="radio2" id =radio5>
+    가중치 <input type="text" id="plus2"><br>
+    <span id="result"></span><br>
+    <input type="button" value="계산" id="btn" >
+    <script>
+    document.getElementById('btn').addEventListener('click',function() {
+      var plus1=document.getElementById('plus1').value
+      var plus2=document.getElementById('plus2').value
+      var radio1=document.getElementsByName('radio1')
+      var radio2=document.getElementsByName('radio2')
+      var a;
+      var b;
+      var result='';
+      for (i=0; i<radio1.length; i++){
+        if(radio1[i].checked==true){
+          a=i;
+
+        }
+      }
+      for (i=0; i<radio2.length; i++){
+        if(radio2[i].checked==true){
+          b=i;
+
+        }
+      }
+      result=`${a}*${plus1}+${b}*${plus2}=${(a*plus1)+(b*plus2)}`
+      document.getElementById('result').innerHTML=result
+
+    });
+
+    </script>
+
+
+
+  </body>
+</html>

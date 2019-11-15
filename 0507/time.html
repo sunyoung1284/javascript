@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <input type="text" id="increaseNumber" value="">
+  <input type="button" id="increase" value="배수증가">
+  <input type="button" id="timerStart" value="타이머시작">
+  <input type="button" id="timerStop" value="타이머종료">
+  <span id=timerresult></span><br>
+  <span id="result"></span>
+
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+<script>
+  var cnt = 0;
+  var timer
+  var timercnt =0;
+
+  $("#increase").click(function() {
+    var inputnumber = $("#increaseNumber").val();
+    var resultnumber = 0;
+    setTimeout(function() {
+      timer = setInterval(function() {
+
+        cnt++;
+
+        $("#result").append(inputnumber*cnt+"<br>")
+
+
+      }, 1000);
+    }, 3000);
+
+  });
+  $("#timerStart").click(function() {
+    setTimeout(function() {
+
+      timer = setInterval(function() {
+        console.log(timercnt);
+        $("#timerresult").html(timercnt);
+        timercnt++;
+      }, 1000);
+
+    }, 3000);
+
+
+  });
+
+  $("#timerStop").click(function() {
+    setTimeout(function() {
+
+      clearInterval(timer);
+    }, 3000);
+
+
+  });
+</script>
+<!-- 배수증가 버튼 클릭: 클릭 3초후 아래로 입력한 숫자의 배수씩 증가
+  타이머 버튼 클릭 3초후 1초에 1씩 증가
+  타이머 종료 버튼 클릭 3초후 타이머 종료 -->
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <div id="chart_div"></div>
+
+
+</body>
+<input type="button" id="graphbtn" value="그리기">
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+  var arr;
+  $("#graphbtn").click(function() {
+    var cat = []
+    var dog = []
+    var pig = []
+    arr = [];
+
+    for (var i = 0; i < 10; i++) {
+      cat[i] = (Math.random() * 10) + 1
+      dog[i] = (Math.random() * 10) + 1
+      pig[i] = (Math.random() * 10) + 1
+      arr.push([i, cat[i], dog[i], pig[i]])
+    }
+
+
+
+    google.charts.load('current', {
+      packages: ['corechart', 'line']
+    });
+    google.charts.setOnLoadCallback(drawCurveTypes);
+    });
+
+  function drawCurveTypes() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'X');
+    data.addColumn('number', 'Dogs');
+    data.addColumn('number', 'Cats');
+    data.addColumn('number', 'Pigs');
+
+    data.addRows(arr);
+
+    var options = {
+      hAxis: {
+        title: 'Time'
+      },
+      vAxis: {
+        title: 'Popularity',
+        viewWindow: {
+          min: 0
+        }
+      },
+      series: {
+        1: {
+          curveType: 'function'
+        }
+      }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>
+
+</html>

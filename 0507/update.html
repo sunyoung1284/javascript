@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  제목 : <input type="text" id="title" value=""> <br>
+  내용 : <input type="text" id="text" value=""><br>
+  작성자 : <input type="text" id="writer" value=""><br>
+  <input type="button" id="btn" value="수정">
+  <input type="button" id="btn2" value="취소">
+
+
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+<script>
+
+  var no=location.href.split("?")[1]
+  $.ajax({
+    url: `http://localhost/getUpdateNews`,
+    data: {
+      no: no // primary 키
+    },
+    success: function(response) {
+      $("#title").val(response[0].title);  // primary 키
+      $("#text").val(response[0].text);
+      $("#writer").val(response[0].writer);
+
+    }
+  });
+
+  $("#btn").click(function() {
+    $.ajax({
+      url: `http://localhost/update`,
+      data: {
+        title: $("#title").val(),
+        text: $("#text").val(),
+        writer: $("#writer").val(),
+        no:no
+      },
+      success: function(response) {
+        location.href = "/form3"
+
+      }
+    })
+
+  });
+
+
+
+  $("#btn2").click(function() {
+
+        location.href = "/form3"
+
+  });
+</script>
+
+</html>

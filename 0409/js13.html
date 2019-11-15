@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <select  name="" id="selectBox">
+    <option value="1">개</option>
+    <option value="2">닭</option>
+    <option value="3">돼지</option>
+
+  </select>
+  <input type="button" id= "btn" name="" value="버튼">
+  <span id ="result"></span>
+  <script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+  <script>
+
+    $("#btn").click(function() {
+
+      if($("#selectBox").val()==1){
+        show("개");
+      }
+      else if($("#selectBox").val()==2){
+        show("닭");
+      }
+      else if($("#selectBox").val()==3){
+        show("돼지");
+      }
+    });
+    function show(animalName){
+      console.log(`${animalName}를 선택하셨습니다.`)
+    }
+  </script>
+
+</body>
+
+</html>

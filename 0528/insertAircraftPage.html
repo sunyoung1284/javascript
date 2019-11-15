@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  항공코드/항공기명/좌석수<br>
+  <span id="result"> </span><br>
+  <br><br><br><br>
+  항공코드 : <input type="text" id="aircraftCode" value=""><br>
+  항공기명 : <input type="text" id="aircraftName" value=""><br>
+  좌석수 : <input type="text" id="seats" value=""><br>
+  <input type="button" id="inputBtn" value="입력">
+  <input type="button" id="cancelBtn" value="취소">
+
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"> </script>
+<script>
+  $.ajax({
+    url: `http://localhost/aircraftPage`,
+    data: {
+
+    },
+    success: function(response) {
+      $("#result").html("");
+      for (var i = 0; i < response.length; i++) {
+        var result = `${response[i].aircraftCode} /${response[i].aircraftName} /${response[i].seats}`
+        var no = response[i].no
+        $("#result").append(`${result} <input type="button" value="삭제" onclick="numberClick(${no})"><br>`);
+      }
+    }
+  });
+
+  function numberClick(no) {
+    $.ajax({
+      url: `/eachDelete`,
+      data: {
+        no: no
+      },
+      success: function(response) {
+        location.href = "/flightListPage"
+      }
+    })
+  };
+
+  $("#inputBtn").click(function() {
+    $.ajax({
+      url: `http://localhost/insertAircraft`,
+      data: {
+        aircraftCode: $("#aircraftCode").val(),
+        aircraftName: $("#aircraftName").val(),
+        seats: $("#seats").val()
+      },
+      success: function(response) {
+        location.href = "/insertAircraftPage"
+
+      }
+    })
+
+  });
+
+  $("#cancelBtn").click(function() {
+    location.href = "/insertAircraftPage"
+  });
+</script>
+
+</html>
